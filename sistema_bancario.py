@@ -59,7 +59,7 @@ def adicionar_usuario(lista_cadastro):
 def criar_conta(*, lista_de_contas, lista_de_usuarios):
     nro_conta = len(lista_de_contas) + 1
 
-    #pesquisar cpf do cliente para ver se já é cadastrado
+    ##pesquisar cpf do cliente para ver se já é cadastrado
     cpf = input("Digite seu cpf. Somente números")
     
     #verificar se o usuário já é cadastrado
@@ -69,7 +69,7 @@ def criar_conta(*, lista_de_contas, lista_de_usuarios):
     else:
         conta_nova = dict(agencia = "0001", nro_conta = nro_conta, usuario = cpf)
         lista_de_contas.append(conta_nova)
-
+        print("Conta cadastrada com sucesso!")
     return lista_de_contas
     
 
@@ -81,7 +81,6 @@ def depositar (saldo, deposito, extrato):
         extrato += f"Depósito de R$ {deposito:.2f}\n"
         print("Seu saldo é R$ {:.2f}".format(saldo))    
     return saldo, extrato
-
 
 def sacar (*, saldo, saque, extrato, limite, numero_saques, limite_saques):
 
@@ -114,44 +113,45 @@ def exibir_extrato(saldo, *, extrato):
     print("Saldo: {:.2f}".format(saldo))
     print("===================================")
 
-
-#limites e valores predefinidos
-saldo = 0
-limite = 500
-extrato = ""
-num_saques = 0
-limite_saques = 3
-lista_usuarios = {}
-lista_contas = []
-
-
-#sistema bancário
-while True:
-
-    opcao = input(menu)
-
-    if opcao == "d":
-        deposito = float(input("Qual valor gostaria de depositar?"))
-        saldo, extrato = depositar(saldo, deposito, extrato)
-
-    elif opcao == "s":
-        saque = float(input("Qual valor gostaria de sacar?"))
-        saldo, extrato, num_saques = sacar(saldo = saldo, saque = saque, extrato = extrato, limite = limite, numero_saques = num_saques, limite_saques = limite_saques)
+def main():
+    #limites e valores predefinidos
+    saldo = 0
+    limite = 500
+    extrato = ""
+    num_saques = 0
+    limite_saques = 3
+    lista_usuarios = {}
+    lista_contas = []
     
-    elif opcao == "e":
-        extrato = exibir_extrato(saldo, extrato = extrato)
-
-    elif opcao == "a":
-        lista_usuarios = adicionar_usuario(lista_usuarios)
+    #sistema bancário
+    while True:
     
-    elif opcao == "c":
-        lista_contas = criar_conta(lista_de_contas = lista_contas, lista_de_usuarios = lista_usuarios)
+        opcao = input(menu)
+    
+        if opcao == "d":
+            deposito = float(input("Qual valor gostaria de depositar?"))
+            saldo, extrato = depositar(saldo, deposito, extrato)
+    
+        elif opcao == "s":
+            saque = float(input("Qual valor gostaria de sacar?"))
+            saldo, extrato, num_saques = sacar(saldo = saldo, saque = saque, extrato = extrato, limite = limite, numero_saques = num_saques, limite_saques = limite_saques)
+        
+        elif opcao == "e":
+            extrato = exibir_extrato(saldo, extrato = extrato)
+    
+        elif opcao == "a":
+            lista_usuarios = adicionar_usuario(lista_usuarios)
+        
+        elif opcao == "c":
+            lista_contas = criar_conta(lista_de_contas = lista_contas, lista_de_usuarios = lista_usuarios)
+    
+        elif opcao == "l":
+            print("Usuários ativos: ", lista_usuarios,"\n", "Contas ativas: ", lista_contas)
+    
+        elif opcao == "q":
+            break
+        
+        else:
+            print("Operação inválida. Por favor selecione novamente a operação desejada.")
 
-    elif opcao == "l":
-        print("Usuários ativos: ", lista_usuarios,"\n", "Contas ativas: ", lista_contas)
-
-    elif opcao == "q":
-        break
-
-    else:
-        print("Operação inválida. Por favor selecione novamente a operação desejada.")
+main()
