@@ -1,4 +1,4 @@
-### Sistema bancário otimizado
+### Sistema bancário otimizado - Módulo 2 DIO
 
 menu = """
 [a] adicionar usuario
